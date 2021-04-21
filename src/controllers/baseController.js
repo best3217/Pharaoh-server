@@ -114,3 +114,7 @@ export const playerBalanceUpdate = async(amount, users_id, golds) => {
 		return result.gold.toFixed(2)
 	}
 }
+
+export const range = (start, end) => {
+    return(new Array(end - start + 1).fill().map((el, ind) => ind + start))
+}

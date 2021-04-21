@@ -5,8 +5,10 @@ const daliyCardHistoriesSchema = new Schema({
 		required: true,
 		ref: 'users'
 	},
-	daily_cards: {
-		type: Array
+	daliy_cards_id: {
+		type: Schema.Types.ObjectId,
+		required: true,
+		ref: 'daliy_card_lists'
 	},
 	crown: {
 		type: Number
@@ -16,6 +18,9 @@ const daliyCardHistoriesSchema = new Schema({
 	},
 	gold: {
 		type: Number
+	},
+	date: {
+		type: String
 	}
 },{ 
   timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } 

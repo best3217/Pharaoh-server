@@ -1,1 +1,0 @@
-{"version":3,"sources":["views/Achievements.js"],"names":["Achievements"],"mappings":"6IAOeA,UANM,WACnB,OACE","file":"static/js/13.0c3ab79f.chunk.js","sourcesContent":["\nconst Achievements = () => {\n  return (\n    <div>Achievements</div>\n  )\n}\n\nexport default Achievements\n"],"sourceRoot":""}

@@ -5,6 +5,7 @@ import providers from './providers'
 import gameLists from './gameLists'
 import players from './players'
 import daliyCardLists from './daliyCardLists'
+import daliyCardHistories from './daliyCardHistories'
 import cardTypes from './cardTypes'
 import cards from './cards'
 import teams from './teams'
@@ -17,6 +18,7 @@ router.use('/providers', providers)
 router.use('/game_lists', gameLists)
 router.use('/players', players)
 router.use('/daliy_card_lists', daliyCardLists)
+router.use('/daliy_card_histories', daliyCardHistories)
 router.use('/card_types', cardTypes)
 router.use('/cards', cards)
 router.use('/teams', teams)
