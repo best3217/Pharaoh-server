@@ -88,6 +88,6 @@ export default (io) => {
 				}
 				io.sockets.emit('destory', {data: expires})
 			}
-		}, 5000)
+		}, 2000)
 	})
 }
