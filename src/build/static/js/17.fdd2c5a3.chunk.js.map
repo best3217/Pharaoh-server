@@ -1,0 +1,1 @@
+{"version":3,"sources":["views/Profile.js"],"names":["Profile"],"mappings":"6IAOeA,UANC,WACd,OACE","file":"static/js/17.fdd2c5a3.chunk.js","sourcesContent":["\nconst Profile = () => {\n  return (\n    <div>Profile</div>\n  )\n}\n\nexport default Profile\n"],"sourceRoot":""}
