@@ -41,7 +41,7 @@ app.get('/soccer', (req, res) => res.sendFile(path.join(__dirname, 'games/soccer
 app.use('/api', routes)
 app.get('*', (req, res) => res.sendFile(__dirname + '/build/index.html'))
 
-mongoose.connect(process.env.PRODATA, {useUnifiedTopology:true, useNewUrlParser:true, useFindAndModify:false, useCreateIndex:true})
+mongoose.connect(process.env.DATABASE, {useUnifiedTopology:true, useNewUrlParser:true, useFindAndModify:false, useCreateIndex:true})
 const http = require('http').createServer(app)
 socket(require('socket.io')(http))
 const port = process.env.PORT || 1998
