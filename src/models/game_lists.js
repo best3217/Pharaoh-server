@@ -24,7 +24,8 @@ const game_listsSchema = new Schema({
 		type: Boolean
 	},
 	level: {
-		type: Number
+		type: Number,
+		default: 0
 	},
 },{ 
   timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } 

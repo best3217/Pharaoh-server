@@ -1,5 +1,5 @@
-import { GameSessions, Providers, Users } from '../models'
-import { createToken, dataSave } from './baseController'
+import { GameSessions } from '../models'
+import { createToken } from './baseController'
 
 export const game = async (req,res,next) => {
     let account = req.user
@@ -23,7 +23,8 @@ export const getLaunchUrl = (gamedata, token, callback) => {
     const LAUNCHURL = gamedata.providers_id.LAUNCHURL
     switch(LAUNCHURL){
         case "1" : {
-            const url = `http://h2931731.stratoserver.net/${gamedata.ID}/` +
+            // const url = `http://h2931731.stratoserver.net/${gamedata.ID}/` +
+            const url = `http://localhost:1998/${gamedata.ID}/` +
             "?gameType=" + gamedata.ID +
             "&token=" +  token.token
             callback({status: true, url})

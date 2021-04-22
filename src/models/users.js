@@ -29,7 +29,8 @@ const usersSchema = new Schema({
 		default: ''
 	},
 	phone: {
-		type: Number
+		type: Number,
+		default: 0
 	},
 	birthday: {
 		type: Date
@@ -61,7 +62,7 @@ const usersSchema = new Schema({
     },
 	status: {
 		type: String,
-		default: 'allow'
+		default: 'active'
 	},
 	createdAt:{
 		type: Date

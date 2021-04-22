@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Types } from 'mongoose'
 const providersSchema = new Schema({
 	title: {
 		type: String

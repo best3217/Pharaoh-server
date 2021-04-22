@@ -48,7 +48,7 @@ export const signRefreshToken = (req, res) => {
 
 export const createToken = async (account, games_id) => {
     let data = {}
-    data['intimestamp'] = new Date(new Date().valueOf() + 1000 * 900)
+    data['expiration'] = new Date(new Date().valueOf() + 3600 * 60 * 15)
     data['users_id'] = account._id
     data['username'] = account.username
     data['email'] = account.email
@@ -77,7 +77,7 @@ export const fairylandError = (error) => {
 }
 
 export const getGameID = async (LAUNCHURL, ID) => {
-	const item = await GameLists.findOne({LAUNCHURL, ID})
+	const item = await GameLists.findOne({ID})
 	if (item) {
 		return { games_id: item._id, providers_id: item.providers_id}
 	} else {

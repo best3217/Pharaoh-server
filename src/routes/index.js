@@ -10,9 +10,17 @@ import cardTypes from './cardTypes'
 import cards from './cards'
 import teams from './teams'
 import fairyland from './fairyland'
+import userSession from './userSession'
+import gameSession from './gameSession'
+import loginHistory from './loginHistory'
+import goldHistory from './goldHistory'
 
 const router = routerx()
 router.use('/users', users)
+router.use('/game_session', gameSession)
+router.use('/gold_history', goldHistory)
+router.use('/login_history', loginHistory)
+router.use('/user_session', userSession)
 router.use('/permissions', permissions)
 router.use('/providers', providers)
 router.use('/game_lists', gameLists)

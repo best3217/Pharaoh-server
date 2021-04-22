@@ -26,6 +26,7 @@ const authenticateChild = async (req) => {
 		return errorResponse("303")
 	} else {
 		const detailuser = await Users.findById(data.users_id)
+		console.log(detailuser)
 		if (!detailuser) {
 			return errorResponse("304")
 		} else {

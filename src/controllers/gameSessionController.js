@@ -1,23 +1,18 @@
-import { daliyCardLists } from '../models'
+import { GameSessions } from '../models'
 import { dataSave } from './baseController'
 
 export const get = async (req,res,next) => {
-    let data = await daliyCardLists.find()
+    let data = await GameSessions.find().populate("users_id")
     return res.json({status:true, data})
 }
 
 export const create = async (req,res,next) => {
-    const data = await dataSave(req.body, daliyCardLists)
+    const data = await dataSave(req.body, GameSessions)
     return res.json({status:true, data})
 }
 
 export const getOne = async (req,res,next) => {
-    let data = await daliyCardLists.findById(req.params.id)
-    return res.json({status:true, data})
-}
-
-export const find = async (req,res,next) => {
-    let data = await daliyCardLists.find(req.body)
+    let data = await GameSessions.findById(req.params.id)
     return res.json({status:true, data})
 }
 
@@ -27,17 +22,22 @@ export const list = async (req,res,next) => {
     if(q){
         query.title =  { "$regex": q, "$options": "i" }
     }
-    const data = await daliyCardLists.find(query).limit(perPage).skip((page-1)*perPage)
-    const total = await daliyCardLists.countDocuments(query)
+    const data = await GameSessions.find(query).populate("users_id").limit(perPage).skip((page-1)*perPage)
+    const total = await GameSessions.countDocuments(query)
     return res.json({status:true, data, total:total})
 }
 
+export const find = async (req,res,next) => {
+    let data = await GameSessions.find(req.body).populate("users_id")
+    return res.json({status:true, data})
+}
+
 export const update = async (req,res,next) => {
-    let data = await daliyCardLists.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    let data = await GameSessions.findByIdAndUpdate(req.params.id, req.body, {new: true})
     return res.json({status:true, data})
 }
 
 export const del = async (req,res,next) => {
-    let data = await daliyCardLists.deleteOne({_id:req.params.id})
+    let data = await GameSessions.deleteOne({_id:req.params.id})
     return res.json({status:true, data})
 }
