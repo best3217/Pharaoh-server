@@ -2,13 +2,12 @@ import { GameSessions } from '../models'
 import { createToken } from './baseController'
 
 export const game = async (req,res,next) => {
-    let account = req.user
-    let gamedata = req.body
-    let token = await createToken(account, gamedata._id)
+    const gamedata = req.body
+    const token = await createToken(req.user, gamedata._id)
     getLaunchUrl(gamedata, token, async (result) => {
         if(result.status){
-            let uhandle = await GameSessions.findOneAndUpdate({email: token.email}, token, {new: true, upsert: true})
-            if(uhandle){
+            const handle = await GameSessions.findOneAndUpdate({email: token.email}, token, {new: true, upsert: true})
+            if(handle){
                 return res.json({ status: true, data: {url: result.url, token, gamedata}})
             }else{
                 return res.json({status: false, data: "You cannot bet Play"})

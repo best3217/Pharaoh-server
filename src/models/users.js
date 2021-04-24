@@ -1,15 +1,22 @@
 import { Schema, model } from 'mongoose'
 import bcrypt from 'bcrypt-nodejs'
-import { getTimeZone } from '../controllers/baseController'
+import { getTimeZone, get_player_id } from '../controllers/baseController'
 const usersSchema = new Schema({
 	permissions_id: {
 		type: Schema.Types.ObjectId,
 		required: true,
 		ref: 'permissions'
 	},
+	pid:{
+		type: Number
+	},
 	teams_id: {
 		type: Schema.Types.ObjectId,
 		ref: 'teams'
+	},
+	levels_id: {
+		type: Schema.Types.ObjectId,
+		ref: 'levels'
 	},
 	email: {
 		type: String
@@ -33,7 +40,8 @@ const usersSchema = new Schema({
 		default: 0
 	},
 	birthday: {
-		type: Date
+		type: Date,
+		default: Date.now
 	},
 	gold: {
 		type: Number,
@@ -81,6 +89,7 @@ usersSchema.pre('save', function (next) {
       user.password = hash
 	  user.createdAt = getTimeZone()
 	  user.updatedAt = getTimeZone()
+	  user.pid = get_player_id()
       next()
     })
   })

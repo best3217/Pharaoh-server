@@ -43,7 +43,9 @@ app.get('*', (req, res) => res.sendFile(__dirname + '/build/index.html'))
 
 mongoose.connect(process.env.DATABASE, {useUnifiedTopology:true, useNewUrlParser:true, useFindAndModify:false, useCreateIndex:true})
 const http = require('http').createServer(app)
-socket(require('socket.io')(http))
+const io = require('socket.io')(http)
+socket(io)
+app.set('io', io)
 const port = process.env.PORT || 1998
 http.listen(port)
 console.log('server listening on:', port)

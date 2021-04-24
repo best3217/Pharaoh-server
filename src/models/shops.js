@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose'
 const shopsSchema = new Schema({
-	type: {
+	title: {
 		type: String
 	},
-	title: {
+	type: {
 		type: String
 	},
 	amount: {
@@ -18,9 +18,15 @@ const shopsSchema = new Schema({
 	slots_upgrade: {
 		type: Number
 	},
+	currency: {
+		type: String
+	},
 	price: {
 		type: Number
 	},
+	off: {
+		type: Number
+	}
 },{ 
   timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } 
 })

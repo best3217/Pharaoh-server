@@ -31,6 +31,6 @@ const game_listsSchema = new Schema({
   timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } 
 })
 game_listsSchema.pre('find', function () {
-	this.populate('providers_id',["LAUNCHURL"])
+	this.populate('providers_id',["LAUNCHURL",'title'])
 })
 export const GameLists = model('game_lists', game_listsSchema)

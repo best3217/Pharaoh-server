@@ -6,9 +6,12 @@ const levelsSchema = new Schema({
 	level: {
 		type: Number
 	},
-	amount: {
+	current_amount: {
 		type: Number
 	},
+	next_amount: {
+		type: Number
+	}
 },{ 
   timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } 
 })

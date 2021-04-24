@@ -1,6 +1,6 @@
 import { Types } from 'mongoose'
 import { BettingHistories, GameSessions, Users } from '../models'
-import { dataSave, fairylandError, getGameID, playerBalanceUpdate } from './baseController'
+import { dataSave, fairylandError, getGameID, playerBalanceUpdate, playerLevelUp } from './baseController'
 
 const LAUNCHURL = "1"
 
@@ -21,12 +21,11 @@ const successResponse = (data) => {
 }
 
 const authenticateChild = async (req) => {
-    const data = await GameSessions.findOne({token: req.token})
+    const data = await GameSessions.findOne({token: req.token}).populate('users_id')
 	if (!data) {
 		return errorResponse("303")
 	} else {
-		const detailuser = await Users.findById(data.users_id)
-		console.log(detailuser)
+		const detailuser = data.users_id
 		if (!detailuser) {
 			return errorResponse("304")
 		} else {
@@ -42,19 +41,20 @@ const authenticateChild = async (req) => {
 }
 
 const creditChild = async (req) => {
-	const detailuser = await Users.findById(req.playerId)
+	const data = req.body
+	const detailuser = await Users.findById(data.playerId)
 	if (!detailuser) {
 		return errorResponse("304")
 	} else {
-		const {games_id, providers_id} = await getGameID(LAUNCHURL, req.ID)
+		const {games_id, providers_id} = await getGameID(LAUNCHURL, data.ID)
         const history = {
             users_id: Types.ObjectId(detailuser._id),
             providers_id: Types.ObjectId(providers_id),
             games_id: Types.ObjectId(games_id),
-            amount: req.creditMoney,
+            amount: data.creditMoney,
             betting: {
                 prevbalance: detailuser.gold,
-                TransactionID: req.transactionID
+                TransactionID: data.transactionID
             },
             type: "WIN"
         }
@@ -63,12 +63,12 @@ const creditChild = async (req) => {
             const goldHistory = {
                 users_id: Types.ObjectId(detailuser._id),
                 games_id: Types.ObjectId(games_id),
-                credited: req.creditMoney,
+                credited: data.creditMoney,
                 debited: 0,
                 last_gold: detailuser.gold,
                 status: "WIN",
             }
-            const updatehandle = await playerBalanceUpdate(req.creditMoney, detailuser._id, goldHistory)
+            const updatehandle = await playerBalanceUpdate(data.creditMoney, detailuser._id, goldHistory, req)
             if (updatehandle === false) {
                 return errorResponse("304")
             } else {
@@ -85,20 +85,21 @@ const creditChild = async (req) => {
 }
 
 const debitChild = async (req) => {
-	const detailuser = await Users.findById(req.playerId)
+	const data = req.body
+	const detailuser = await Users.findById(data.playerId)
 	if (!detailuser) {
 		return errorResponse("304")
 	} else {
-		if (req.debitMoney <= detailuser.gold) {
-			const {games_id, providers_id} = await getGameID(LAUNCHURL, req.ID)
+		if (data.debitMoney <= detailuser.gold) {
+			const {games_id, providers_id} = await getGameID(LAUNCHURL, data.ID)
 			const history = {
 				users_id: Types.ObjectId(detailuser._id),
                 providers_id: Types.ObjectId(providers_id),
                 games_id: Types.ObjectId(games_id),
-				amount: req.debitMoney,
+				amount: data.debitMoney,
 				betting: {
                     prevbalance: detailuser.gold,
-					TransactionID: req.transactionID
+					TransactionID: data.transactionID
 				},
                 type: "BET"
 			}
@@ -108,11 +109,12 @@ const debitChild = async (req) => {
 					users_id: Types.ObjectId(detailuser._id),
 					games_id: Types.ObjectId(games_id),
 					credited: 0,
-					debited: req.debitMoney,
+					debited: data.debitMoney,
 					last_gold: detailuser.gold,
                     status: "BET",
 				}
-				const updatehandle = await playerBalanceUpdate(req.debitMoney*-1, detailuser._id, goldHistory)
+				const levelupdate = await playerLevelUp(detailuser._id, data.debitMoney, req)
+				const updatehandle = await playerBalanceUpdate(data.debitMoney*-1, detailuser._id, goldHistory, req)
 				if (updatehandle === false) {
 					return errorResponse("304")
 				} else {
@@ -137,11 +139,11 @@ export const authenticate = async (req,res,next) => {
 }
 
 export const credit = async (req, res, next) => {
-	const result = await creditChild(req.body)
+	const result = await creditChild(req)
 	return res.json(result)
 }
 
 export const debit = async (req, res, next) => {
-	const result = await debitChild(req.body)
+	const result = await debitChild(req)
 	return res.json(result)
 }
