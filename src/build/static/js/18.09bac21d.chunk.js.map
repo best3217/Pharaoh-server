@@ -1,1 +1,0 @@
-{"version":3,"sources":["views/Shops.js"],"names":["Shops"],"mappings":"6IAMeA,UAND,WACZ,OACE","file":"static/js/18.09bac21d.chunk.js","sourcesContent":["const Shops = () => {\n  return (\n    <div>Shops</div>\n  )\n}\n\nexport default Shops\n"],"sourceRoot":""}
