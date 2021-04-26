@@ -1,6 +1,6 @@
 import { Types } from 'mongoose'
 import { BettingHistories, GameSessions, Users } from '../models'
-import { dataSave, fairylandError, getGameID, playerBalanceUpdate, playerLevelUp } from './baseController'
+import { dataSave, fairylandError, getGameID, playerBalanceUpdate, playerLevelUp, updateTotalWin } from './baseController'
 
 const LAUNCHURL = "1"
 
@@ -20,8 +20,8 @@ const successResponse = (data) => {
 	}
 }
 
-const authenticateChild = async (req) => {
-    const data = await GameSessions.findOne({token: req.token}).populate('users_id')
+const authenticateChild = async ({token}) => {
+    const data = await GameSessions.findOne({token}).populate('users_id')
 	if (!data) {
 		return errorResponse("303")
 	} else {
@@ -34,7 +34,7 @@ const authenticateChild = async (req) => {
 			row['playerName'] = detailuser.username
 			row['currency'] = "INR"
 			row['balance'] = parseFloat(detailuser.gold).toFixed(2)
-			row['token'] = req.token
+			row['token'] = token
 			return successResponse(row)
 		}
 	}
@@ -68,6 +68,7 @@ const creditChild = async (req) => {
                 last_gold: detailuser.gold,
                 status: "WIN",
             }
+			await updateTotalWin(detailuser._id, data.creditMoney, req)
             const updatehandle = await playerBalanceUpdate(data.creditMoney, detailuser._id, goldHistory, req)
             if (updatehandle === false) {
                 return errorResponse("304")
@@ -113,7 +114,7 @@ const debitChild = async (req) => {
 					last_gold: detailuser.gold,
                     status: "BET",
 				}
-				const levelupdate = await playerLevelUp(detailuser._id, data.debitMoney, req)
+				await playerLevelUp(detailuser._id, data.debitMoney, req)
 				const updatehandle = await playerBalanceUpdate(data.debitMoney*-1, detailuser._id, goldHistory, req)
 				if (updatehandle === false) {
 					return errorResponse("304")

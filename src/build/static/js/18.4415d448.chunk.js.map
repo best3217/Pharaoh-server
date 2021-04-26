@@ -1,1 +1,0 @@
-{"version":3,"sources":["views/Kingspath.js"],"names":["Kingspath"],"mappings":"6IAOeA,UANG,WAChB,OACE","file":"static/js/18.4415d448.chunk.js","sourcesContent":["\nconst Kingspath = () => {\n  return (\n    <div>Kingspath</div>\n  )\n}\n\nexport default Kingspath\n"],"sourceRoot":""}

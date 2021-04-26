@@ -1,0 +1,1 @@
+{"version":3,"sources":["views/Loyalty.js"],"names":["Loyalty"],"mappings":"6IAOeA,UANC,WACd,OACE","file":"static/js/20.9ae756ab.chunk.js","sourcesContent":["\nconst Loyalty = () => {\n  return (\n    <div>Loyalty</div>\n  )\n}\n\nexport default Loyalty\n"],"sourceRoot":""}

@@ -1,3 +1,4 @@
+import md5 from 'md5'
 import { Types } from 'mongoose'
 import { LoginHistories, Users, Permissions, Sessions, Levels, BettingHistories, GameSessions } from '../models'
 import { getIPAddress, dataSave, signRefreshToken, signAccessToken, royalLeague } from './baseController'
@@ -41,7 +42,7 @@ export const register = async (req,res,next) => {
         return res.json({status: false, error:'username'})
     }
     const permissions_id = await Permissions.findOne({title:role})
-    const levels_id = await Levels.findOne({level:0})
+    const levels_id = await Levels.findOne({level:1})
     const result = await dataSave(Object.assign({}, user, {permissions_id, levels_id}), Users)
     if(!result){
         return res.json({status: false, error: 'error'})
@@ -124,7 +125,7 @@ export const del = async (req,res,next) => {
 export const label = async (req,res,next) => {
     const data =  await Users.aggregate([{
         $project:{ label:'$email', value:'$_id' }
-    }]);
+    }])
     return res.json({status:true, data})
 }
 
@@ -135,11 +136,77 @@ export const logOut = async (req,res,next) => {
     return res.json({status:true})
 }
 
-export const getuserinfo = async (req,res,next) => {
-    const users_id = Types.ObjectId('6081640d78e758296ce44528')
+export const changePassword = async (req,res,next) => {
+    const { users_id, newPassword, currentPassword } = req.body
+    const user = await Users.findById(users_id)
+    if(!user.validPassword(currentPassword, user.password)){
+        return res.json({status: false, message: 'passwords do not match'})
+    }
+    const password = user.generateHash(newPassword)
+    const result = await Users.findByIdAndUpdate(users_id, {password})
+    if(result){
+        return res.json({status: true})
+    }else{
+        return res.json({status: false, error: "server error"})
+    }
+}
+
+
+export const usersRoyalLeague = async (req,res,next) => {
+    const data = await Users.aggregate([
+        {
+            $match:{
+                permissions_id:Types.ObjectId('607b8b7b790b633d942543ea')
+            }
+        },
+        {
+            $sort: {
+                total_win: -1
+            }
+        },
+        {
+            $group: {
+                _id: {},
+                arr: {
+                    $push: {
+                        _id: '$_id',
+                        email: '$email',
+                        username: '$username',
+                        total_win: '$total_win'
+                    }
+                }
+            }
+        }, 
+        {
+            $unwind: {
+                path: '$arr',
+                includeArrayIndex: 'royal_league',
+            }
+        },{
+            $project: {
+                _id: '$arr._id',
+                email: '$arr.email',
+                username: '$arr.username',
+                total_win: '$arr.total_win',
+                royal_league: '$royal_league',
+            }
+        }
+    ])
+    return res.json({status: true, data})
+}
+
+export const userRoyalLeague = async (req,res,next) => {
+    const users_id = Types.ObjectId(req.params.id)
     const bigwin = await BettingHistories.findOne({type:'WIN', users_id}).sort({amount: -1}).select('amount')
-    const levels = await Users.findById(users_id).populate('levels_id').select('levels_id')
     const users = await Users.findById(users_id).populate('levels_id').populate('teams_id')
     const league = await royalLeague(users_id)
-    return res.json({status:true, bigwin:bigwin.amount, level:levels.levels_id.level, league, users})
+    return res.json({status:true, data: {
+            bigwin:bigwin?.amount ? bigwin.amount : '-', 
+            level:users.levels_id?.level ? users.levels_id.level : '-', 
+            total_win:users.total_win ? users.total_win : '-',
+            league: league ? league : '-', 
+            team:users.teams_id?.team ? users.teams_id.team : '-', 
+            team_rank:users.teams_id?.rank !== null ? users.teams_id.rank : '-', 
+            team_league:users.teams_id?.league !== null ? users.teams_id.league : '-'
+        }})
 }

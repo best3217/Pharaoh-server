@@ -10,6 +10,10 @@ const usersSchema = new Schema({
 	pid:{
 		type: Number
 	},
+	team_members_id: {
+		type: Schema.Types.ObjectId,
+		ref: 'team_members'
+	},
 	teams_id: {
 		type: Schema.Types.ObjectId,
 		ref: 'teams'
@@ -59,6 +63,9 @@ const usersSchema = new Schema({
 		type: Number,
 		default: 0
 	},
+	total_win: {
+		type: Number
+	},
 	royal_league: {
 		type: Number
 	},
@@ -95,6 +102,10 @@ usersSchema.pre('save', function (next) {
   })
 })
 
+usersSchema.methods.generateHash = function (password) {
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+}
+
 usersSchema.methods.comparePassword = function (candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     if (err) { return callback(err) }
@@ -103,7 +114,7 @@ usersSchema.methods.comparePassword = function (candidatePassword, callback) {
 }
 
 usersSchema.methods.validPassword = function (password, encrypted) {
-	return bcrypt.compareSync(password, encrypted);
+	return bcrypt.compareSync(password, encrypted)
 }
 
 export const Users = model('users', usersSchema)

@@ -1,26 +1,42 @@
 import mongoose, { Schema } from 'mongoose'
 const teamsSchema = new Schema({
-	rank: {
-		type: Number
-	},
 	team: {
 		type: String
 	},
-	team_score: {
+	league: {
+		type: String,
+		default: 'stone'
+	},
+	space: {
 		type: Number
+	},
+	joinAt: {
+		type: Number
+	},
+	rank: {
+		type: Number,
+		default: 0
+	},
+	team_score: {
+		type: Number,
+		default: 0
 	},
 	places: {
-		type: Number
+		type: Number,
+		default: 0
 	},
 	league_score: {
-		type: Number
+		type: Number,
+		default: 0
 	},
 	gold: {
-		type: Number
+		type: Number,
+		default: 5000000
 	},
 	crowns: {
-		type: Number
-	},
+		type: Number,
+		default: 10
+	}
 },{ 
   timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } 
 })

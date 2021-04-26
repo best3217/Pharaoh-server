@@ -21,8 +21,19 @@ export const find = async (req,res,next) => {
     return res.json({status:true, data})
 }
 
+export const list = async (req,res,next) => {
+    const { perPage = 10, page = 1, q=null } = req.body
+    let query = {}
+    if(q){
+        query.title =  { "$regex": q, "$options": "i" }
+    }
+    const data = await Teams.find(query).limit(perPage).skip((page-1)*perPage)
+    const total = await Teams.countDocuments(query)
+    return res.json({status:true, data, total:total})
+}
+
 export const update = async (req,res,next) => {
-    let data = await Teams.updateOne({_id:req.params.id}, req.body)
+    let data = await Teams.findByIdAndUpdate(req.params.id, req.body, {new: true})
     return res.json({status:true, data})
 }
 

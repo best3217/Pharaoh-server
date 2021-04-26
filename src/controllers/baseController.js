@@ -130,11 +130,14 @@ export const playerLevelUp = async (users_id, level, req) => {
     }else{
         const mylevel = (result.level - result.levels_id.current_amount) / (result.levels_id.next_amount - result.levels_id.current_amount)
         req.app.get('io').to(socketid).emit('level-progress', {mylevel})
-    }
+    } 
+}
+
+export const updateTotalWin = async (users_id, total_win, req) => {
+    await Users.findByIdAndUpdate(users_id, {$inc: {total_win}}, {new: true, upsert: true}).populate('levels_id')
+    const { socketid } = await Sessions.findOne({users_id})
     const league = await royalLeague(users_id)
-    if(league.length){
-        req.app.get('io').to(socketid).emit('royal-league', league[0])
-    }
+    req.app.get('io').to(socketid).emit('royal-league', league)
 }
 
 export const range = (start, end) => {
@@ -144,8 +147,13 @@ export const range = (start, end) => {
 export const royalLeague = async (users_id) => {
     const data = await Users.aggregate([
         {
+            $match:{
+                permissions_id:Types.ObjectId('607b8b7b790b633d942543ea')
+            }
+        },
+        {
             $sort: {
-                level: -1
+                total_win: -1
             }
         },
         {
@@ -155,7 +163,7 @@ export const royalLeague = async (users_id) => {
                     $push: {
                         _id: '$_id',
                         email: '$email',
-                        level: '$level'
+                        total_win: '$total_win'
                     }
                 }
             }
@@ -169,7 +177,7 @@ export const royalLeague = async (users_id) => {
             $project: {
                 _id: '$arr._id',
                 email: '$arr.email',
-                level: '$arr.level',
+                total_win: '$arr.total_win',
                 royal_league: '$royal_league',
             }
         },

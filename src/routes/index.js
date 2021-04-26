@@ -18,6 +18,7 @@ import loginHistory from './loginHistory'
 import bettingHistory from './bettingHistory'
 import daliyCardHistories from './daliyCardHistories'
 import levels from './levels'
+import teamMembers from './teamMembers'
 
 const router = routerx()
 router.use('/users', users)
@@ -39,5 +40,6 @@ router.use('/game_history', gameHistory)
 router.use('/gold_history', goldHistory)
 router.use('/betting_history', bettingHistory)
 router.use('/daliy_card_histories', daliyCardHistories)
+router.use('/team_members', teamMembers)
 
 export default router
