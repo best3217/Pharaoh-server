@@ -201,12 +201,12 @@ export const userRoyalLeague = async (req,res,next) => {
     const users = await Users.findById(users_id).populate('levels_id').populate('teams_id')
     const league = await royalLeague(users_id)
     return res.json({status:true, data: {
-            bigwin:bigwin?.amount ? bigwin.amount : '-', 
-            level:users.levels_id?.level ? users.levels_id.level : '-', 
-            total_win:users.total_win ? users.total_win : '-',
-            league: league ? league : '-', 
-            team:users.teams_id?.team ? users.teams_id.team : '-', 
-            team_rank:users.teams_id?.rank !== null ? users.teams_id.rank : '-', 
-            team_league:users.teams_id?.league !== null ? users.teams_id.league : '-'
+            bigwin:bigwin?.amount,
+            level:users.levels_id?.level, 
+            total_win:users.total_win,
+            league,
+            team:users.teams_id?.team,
+            team_rank:users.teams_id?.rank,
+            team_league:users.teams_id?.league
         }})
 }
