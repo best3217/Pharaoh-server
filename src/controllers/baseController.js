@@ -44,7 +44,7 @@ export const signRefreshToken = (req, res) => {
             return { accesssToken }
         }
     } catch (err) {
-        return res.status(401).json({ error: 'Unauthorized' })
+        res.status(401).json({ error: 'Unauthorized' })
     }
 }
 

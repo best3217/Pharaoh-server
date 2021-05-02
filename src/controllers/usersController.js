@@ -55,7 +55,7 @@ export const register = async (req,res,next) => {
 
 export const refreshToken = (req, res) => {
     const refreshToken = signRefreshToken(req, res)
-    return res.status(200).json(refreshToken)
+    return res.json(refreshToken)
 }
 
 export const get = async (req,res,next) => {

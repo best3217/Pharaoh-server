@@ -22,8 +22,7 @@ export const getLaunchUrl = (gamedata, token, callback) => {
     const LAUNCHURL = gamedata.providers_id.LAUNCHURL
     switch(LAUNCHURL){
         case "1" : {
-            const url = `http://h2931731.stratoserver.net/${gamedata.ID}/` +
-            // const url = `http://localhost:1998/${gamedata.ID}/` +
+            const url = `${process.env.APIURL}${gamedata.ID}/` +
             "?gameType=" + gamedata.ID +
             "&token=" +  token.token
             callback({status: true, url})
