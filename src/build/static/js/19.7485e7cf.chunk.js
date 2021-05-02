@@ -1,2 +1,0 @@
-(this["webpackJsonppharao-frontend"]=this["webpackJsonppharao-frontend"]||[]).push([[19],{649:function(n,t,r){"use strict";r.r(t);var a=r(4);t.default=function(){return Object(a.jsx)("div",{children:"Kingspath"})}}}]);
-//# sourceMappingURL=19.7485e7cf.chunk.js.map

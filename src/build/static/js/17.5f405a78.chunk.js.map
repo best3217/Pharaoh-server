@@ -1,1 +1,0 @@
-{"version":3,"sources":["views/Cards.js"],"names":["Cards"],"mappings":"6IAOeA,UAND,WACZ,OACE","file":"static/js/17.5f405a78.chunk.js","sourcesContent":["\nconst Cards = () => {\n  return (\n    <div>Cards</div>\n  )\n}\n\nexport default Cards\n"],"sourceRoot":""}

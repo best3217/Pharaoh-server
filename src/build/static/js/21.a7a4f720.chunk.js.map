@@ -1,1 +1,0 @@
-{"version":3,"sources":["views/Tournament.js"],"names":["Tournament"],"mappings":"6IAOeA,UANI,WACjB,OACE","file":"static/js/21.a7a4f720.chunk.js","sourcesContent":["\nconst Tournament = () => {\n  return (\n    <div>Tournament</div>\n  )\n}\n\nexport default Tournament\n"],"sourceRoot":""}
