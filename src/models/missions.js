@@ -8,6 +8,11 @@ const missionsSchema = new Schema({
 		required: true,
 		ref: 'game_lists'
 	},
+	tasks_id: {
+		type: Schema.Types.ObjectId,
+		required: true,
+		ref: 'tasks'
+	},
 	type:{
 		type: String
 	}, 

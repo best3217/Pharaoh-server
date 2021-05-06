@@ -22,6 +22,10 @@ const usersSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'levels'
 	},
+	tasks_id: {
+		type: Schema.Types.ObjectId,
+		ref: 'tasks'
+	},
 	email: {
 		type: String
 	},
