@@ -5,6 +5,7 @@ import providers from './providers'
 import gameLists from './gameLists'
 import players from './players'
 import daliyCardLists from './daliyCardLists'
+import bonusSlots from './bonusSlots'
 import cardTypes from './cardTypes'
 import cards from './cards'
 import teams from './teams'
@@ -19,6 +20,8 @@ import bettingHistory from './bettingHistory'
 import daliyCardHistories from './daliyCardHistories'
 import levels from './levels'
 import teamMembers from './teamMembers'
+import bonusSlotsHistory from './bonusSlotsHistory'
+import missions from './missions'
 
 const router = routerx()
 router.use('/users', users)
@@ -30,6 +33,9 @@ router.use('/levels', levels)
 router.use('/game_lists', gameLists)
 router.use('/players', players)
 router.use('/daliy_card_lists', daliyCardLists)
+router.use('/bonus_slots', bonusSlots)
+router.use('/bonus_slots_history', bonusSlotsHistory)
+router.use('/missions', missions)
 router.use('/card_types', cardTypes)
 router.use('/cards', cards)
 router.use('/teams', teams)

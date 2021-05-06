@@ -1,16 +1,16 @@
 import routerx from 'express-promise-router'
-import { create, get, getOne, find, update, del, list, label } from '../controllers/gameListsController'
+import { create, get, getOne, find, update, del, save, list } from '../controllers/bonusSlotsHistoryController'
 import { verifyToken } from '../middlewares/auth'
 
 const router=routerx()
 
-router.get('/', verifyToken, get)
+router.get('/', get)
 router.post('/', create)
-router.patch('/', label)
-router.get('/:id', getOne)
 router.post('/list', list)
+router.get('/:id', getOne)
 router.post('/find', find)
 router.put('/:id', update)
 router.delete('/:id', del)
+router.post('/saves', verifyToken, save)
 
 export default router

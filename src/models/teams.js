@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose'
+import { model, Schema } from 'mongoose'
 const teamsSchema = new Schema({
 	team: {
 		type: String
@@ -40,4 +40,5 @@ const teamsSchema = new Schema({
 },{ 
   timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } 
 })
-export const Teams = mongoose.model('teams', teamsSchema)
+export const Teams = model('teams', teamsSchema)
+

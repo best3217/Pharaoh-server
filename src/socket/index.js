@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import moment from 'moment'
-import { daliyCardHistories, daliyCardLists, GameSessions, Sessions, Users } from '../models'
+import { BonusSlotsHistories, daliyCardHistories, daliyCardLists, GameSessions, Sessions, Users } from '../models'
 import { dataSave, range, royalLeague } from '../controllers/baseController'
 export default (io) => {
 	io.on("connection", async (socket) => {
@@ -17,7 +17,9 @@ export default (io) => {
 					const yesterday = await daliyCardHistories.countDocuments({users_id: decoded.users_id, date:moment(new Date()-86400000).format('YYYY-MM-DD')})
 					const today = await daliyCardHistories.countDocuments({users_id: decoded.users_id, date:moment().format('YYYY-MM-DD')})
 					if(yesterday){
-						if(yesterday+1 !== today){
+						if(yesterday >= 7){
+							io.to(socket.id).emit('daliy-bonus', {count:1})
+						}else if(yesterday+1 !== today){
 							io.to(socket.id).emit('daliy-bonus', {count:yesterday+1-today})
 						}else{
 							// console.log('already bonus')
@@ -45,7 +47,7 @@ export default (io) => {
 							gold: daliy.gold,
 							date: moment().format('YYYY-MM-DD')
 						}
-						const result = await Users.updateOne({_id: decoded.users_id}, {$inc: {gold:daliy.gold, crown:daliy.crown, cards:daliy.cards}}, {new: true, upsert: true})
+						await Users.updateOne({_id: decoded.users_id}, {$inc: {gold:daliy.gold, crown:daliy.crown, cards:daliy.cards}}, {new: true, upsert: true})
 						await dataSave(data, daliyCardHistories)
 						socket.emit("daliy-card-result", {
 							crown: daliy.crown, 
@@ -59,9 +61,19 @@ export default (io) => {
 							await Sessions.deleteOne({users_id: decoded.users_id})
 						}
 					})
+
+
+					//////////////////////////////bouns-slots-remaining//////////////////////////////
+					const bouns = await BonusSlotsHistories.findOne({users_id: decoded.users_id}).sort({createdAt: -1})
+					if(bouns){
+						io.to(socket.id).emit('bonus-slots-remaining', bouns.remaining)
+					}else{
+						io.to(socket.id).emit('bonus-slots-remaining', (new Date().valueOf() - 3600000))
+					}
 				}
 			} catch (err) {
 				console.log(socket.id);
+				console.log(err)
 				io.to(socket.id).emit('destory')
 			}
 		}

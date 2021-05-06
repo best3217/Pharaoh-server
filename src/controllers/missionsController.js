@@ -1,18 +1,20 @@
-import { Providers } from '../models'
+import { Types } from 'mongoose'
+import { Missions } from '../models'
 import { dataSave } from './baseController'
 
 export const get = async (req,res,next) => {
-    let data = await Providers.find().sort({order: 0})
+    let data = await Missions.find().sort({order: 0}).populate("games_id")
     return res.json({status:true, data})
 }
 
 export const create = async (req,res,next) => {
-    const data = await dataSave(req.body, Providers)
+    const result = await dataSave(req.body, Missions)
+    const data = await Missions.findById(result._id).populate("games_id")
     return res.json({status:true, data})
 }
 
 export const getOne = async (req,res,next) => {
-    let data = await Providers.findById(req.params.id)
+    let data = await Missions.findById(req.params.id).populate("games_id")
     return res.json({status:true, data})
 }
 
@@ -22,29 +24,29 @@ export const list = async (req,res,next) => {
     if(q){
         query.title =  { "$regex": q, "$options": "i" }
     }
-    const data = await Providers.find(query).limit(perPage).skip((page-1)*perPage).sort({order: 0})
-    const total = await Providers.countDocuments(query)
+    const data = await Missions.find(query).populate("games_id").limit(perPage).skip((page-1)*perPage).sort({order: 0})
+    const total = await Missions.countDocuments(query)
     return res.json({status:true, data, total:total})
 }
 
 export const label = async (req,res,next) => {
-    const data =  await Providers.aggregate([{
+    const data =  await Missions.aggregate([{
         $project:{ label:'$title', value:'$_id' }
     }]);
     return res.json({status:true, data})
 }
 
 export const find = async (req,res,next) => {
-    let data = await Providers.find(req.body).sort({order: 0})
+    let data = await Missions.find(req.body).sort({order: 0}).populate("games_id")
     return res.json({status:true, data})
 }
 
 export const update = async (req,res,next) => {
-    let data = await Providers.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    let data = await Missions.findByIdAndUpdate(req.params.id, req.body, {new: true}).populate("games_id")
     return res.json({status:true, data})
 }
 
 export const del = async (req,res,next) => {
-    let data = await Providers.deleteOne({_id:req.params.id})
+    let data = await Missions.deleteOne({_id:req.params.id})
     return res.json({status:true, data})
 }

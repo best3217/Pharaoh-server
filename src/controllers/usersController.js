@@ -77,7 +77,7 @@ export const list = async (req,res,next) => {
     }
     const data = await Users.find(query).populate("permissions_id").populate("levels_id").limit(perPage).skip((page-1)*perPage)
     const total = await Users.countDocuments(query)
-    return res.json({status:true, data, total:total})
+    return res.json({status:true, data, total:total })
 }
 
 export const create = async (req,res,next) => {
@@ -123,9 +123,14 @@ export const del = async (req,res,next) => {
 }
 
 export const label = async (req,res,next) => {
-    const data =  await Users.aggregate([{
-        $project:{ label:'$email', value:'$_id' }
-    }])
+    const data =  await Users.aggregate([
+        {
+            $match:{ status: 'active', permissions_id: Types.ObjectId('607b8b7b790b633d942543ea') }
+        },
+        {
+            $project:{ label:'$email', value:'$_id' }
+        }
+    ])
     return res.json({status:true, data})
 }
 

@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose'
+import { model, Schema } from 'mongoose'
 const daliyCardHistoriesSchema = new Schema({
 	users_id: {
 		type: Schema.Types.ObjectId,
@@ -25,4 +25,4 @@ const daliyCardHistoriesSchema = new Schema({
 },{ 
   timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } 
 })
-export const daliyCardHistories = mongoose.model('daliy_card_histories', daliyCardHistoriesSchema)
+export const daliyCardHistories = model('daliy_card_histories', daliyCardHistoriesSchema)

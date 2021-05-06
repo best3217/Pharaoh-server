@@ -48,3 +48,15 @@ export const del = async (req,res,next) => {
     let data = await GameLists.deleteOne({_id:req.params.id})
     return res.json({status:true, data})
 }
+
+export const label = async (req,res,next) => {
+    const data =  await GameLists.aggregate([
+        {
+            $match:{ status:true }
+        },
+        {
+            $project:{ label:'$title', value:'$_id' }
+        }
+    ]);
+    return res.json({status:true, data})
+}

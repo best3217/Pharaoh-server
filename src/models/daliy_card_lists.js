@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose'
+import { model, Schema } from 'mongoose'
 const daliyCardListsSchema = new Schema({
 	id: {
 		type: Number
@@ -15,4 +15,4 @@ const daliyCardListsSchema = new Schema({
 },{ 
   timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } 
 })
-export const daliyCardLists = mongoose.model('daliy_card_lists', daliyCardListsSchema)
+export const daliyCardLists = model('daliy_card_lists', daliyCardListsSchema)
