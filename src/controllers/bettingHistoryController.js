@@ -52,8 +52,8 @@ export const list = async (req,res,next) => {
     ])
     const bet = amount.find(e=>e._id ==='BET')
     const win = amount.find(e=>e._id ==='WIN')
-    const balance = { bet: bet?bet.amount:0, win: win?win.amount:0 }
-    return res.json({status:true, data, total:total, balance, users:users.length })
+    const balance = { bet: bet?bet.amount:0, win: win?win.amount:0}
+    return res.json({status:true, data, total:total, balance, uCount:users.length })
 }
 
 export const label = async (req,res,next) => {
