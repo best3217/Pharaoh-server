@@ -10,7 +10,6 @@ const missionsSchema = new Schema({
 	},
 	tasks_id: {
 		type: Schema.Types.ObjectId,
-		required: true,
 		ref: 'tasks'
 	},
 	type:{
