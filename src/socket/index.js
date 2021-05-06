@@ -65,6 +65,7 @@ export default (io) => {
 
 					//////////////////////////////bouns-slots-remaining//////////////////////////////
 					const bouns = await BonusSlotsHistories.findOne({users_id: decoded.users_id}).sort({createdAt: -1})
+					console.log(bouns)
 					if(bouns){
 						io.to(socket.id).emit('bonus-slots-remaining', bouns.remaining)
 					}else{
