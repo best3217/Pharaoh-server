@@ -2,6 +2,7 @@
   "name": "pharao-frontend",
   "version": "6.3.0",
   "private": true,
+  "homepage": "http://localhost:1998/",
   "dependencies": {
     "@casl/ability": "4.1.6",
     "@casl/react": "2.1.1",
