@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>HORSE RACING</title>
+		<link rel="stylesheet" href="css/reset.css" type="text/css">
+		<link rel="stylesheet" href="css/main.css" type="text/css">
+		<link rel="stylesheet" href="css/orientation_utils.css" type="text/css">
+		<link rel="stylesheet" href="css/ios_fullscreen.css" type="text/css">
+		<link rel='shortcut icon' type='image/x-icon' href='./favicon.ico' />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+		<meta name="msapplication-tap-highlight" content="no"/>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/howler.min.js"></script>
+		<script type="text/javascript" src="js/screenfull.js"></script>
+		<script type="text/javascript" src="js/ios_fullscreen.js"></script>
+		<script type="text/javascript" src="js/platform.js"></script>
+		<script type="text/javascript" src="js/createjs-2015.11.26.min.js"></script>
+		<script type="text/javascript" src="js/ctl_utils.js"></script>
+		<script type="text/javascript" src="js/sprite_lib.js"></script>
+		<script type="text/javascript" src="js/settings.js"></script>
+		<script type="text/javascript" src="js/CGameSettings.js"></script>
+		<script type="text/javascript" src="js/CLang.js"></script>
+		<script type="text/javascript" src="js/CPreloader.js"></script>
+		<script type="text/javascript" src="js/CMain.js"></script>
+		<script type="text/javascript" src="js/CTextButton.js"></script>
+		<script type="text/javascript" src="js/CToggle.js"></script>
+		<script type="text/javascript" src="js/CGfxButton.js"></script>
+		<script type="text/javascript" src="js/CMenu.js"></script>
+		<script type="text/javascript" src="js/CGame.js"></script>
+		<script type="text/javascript" src="js/CInterface.js"></script>
+		<script type="text/javascript" src="js/CCreditsPanel.js"></script>
+		<script type="text/javascript" src="js/CBetPanel.js"></script>
+		<script type="text/javascript" src="js/CChipPanel.js"></script>
+		<script type="text/javascript" src="js/CSimpleBetPanel.js"></script>
+		<script type="text/javascript" src="js/CForecastPanel.js"></script>
+		<script type="text/javascript" src="js/CBetList.js"></script>
+		<script type="text/javascript" src="js/CFichesController.js"></script>
+		<script type="text/javascript" src="js/CButBet.js"></script>
+		<script type="text/javascript" src="js/CVector2.js"></script>
+		<script type="text/javascript" src="js/CMsgBox.js"></script>
+		<script type="text/javascript" src="js/CTrackBg.js"></script>
+		<script type="text/javascript" src="js/CHorse.js"></script>
+		<script type="text/javascript" src="js/CTweenController.js"></script>
+		<script type="text/javascript" src="js/CRankingGui.js"></script>
+		<script type="text/javascript" src="js/CArrivalPanel.js"></script>
+		<script type="text/javascript" src="js/CWinPanel.js"></script>
+		<script type="text/javascript" src="js/CLosePanel.js"></script>
+		<script type="text/javascript" src="js/CButStartRace.js"></script>
+		<script type="text/javascript" src="js/CAreYouSurePanel.js"></script>
+		<script type="text/javascript" src="js/CGate.js"></script>
+		<script type="text/javascript" src="js/CCTLText.js"></script>
+		<script type="text/javascript" src="js/CFicheBut.js"></script>
+	</head>
+	<body ondragstart="return false;" ondrop="return false;" >
+		<div style="position: fixed; background-color: transparent; top: 0px; left: 0px; width: 100%; height: 100%"></div>
+		<script>
+			$(document).ready(function () {
+				var search = location.search.substring(1);
+				var gameInfo = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+				var Balance = 0;
+				var url = "http://192.168.104.90:1998/api/";
+				// var url = "http://h2931731.stratoserver.net/api/";
+				$.ajax({
+					url : url+"fairyland/authenticate",
+					type: "POST",
+					data : {token: gameInfo.token},
+					async : false,
+					success: function(response, textStatus, jqXHR) {
+						var gameData = response.data;
+						Balance = parseFloat(gameData.balance);
+						var oMain = new CMain({
+							money: Balance,
+							min_bet: 100,
+							max_bet: 100000,
+							win_occurrence: 40,
+							game_cash: 100,
+							chip_values: [100, 500, 1000, 2500, 5000, 10000],
+							audio_enable_on_startup: false,
+							show_credits: false,
+							fullscreen: true,
+							check_orientation: true,
+							num_levels_for_ads: 2
+						});
+
+						$(oMain).on("start_session", function (evt) {
+							if (getParamValue('ctl-arcade') === "true") {
+								parent.__ctlArcadeStartSession();
+							}
+						});
+
+						$(oMain).on("end_session", function (evt) {
+							if (getParamValue('ctl-arcade') === "true") {
+								parent.__ctlArcadeEndSession();
+							}
+						});
+
+						$(oMain).on("bet_placed", function (evt, iTotBet) {
+							$.ajax({
+								url : url+"fairyland/debit",
+								type: "POST",
+								data : {ID: gameInfo.gameType, debitMoney:iTotBet, playerId:gameData.playerId, transactionID:new Date().valueOf()},
+								async : false,
+								success: function(response, textStatus, jqXHR) {
+									Balance = Balance - iTotBet
+									console.log(Balance);
+								},
+								error: function (jqXHR, textStatus, errorThrown) {
+									console.log('============debit==================error');
+								}
+							});
+						});
+
+						$(oMain).on("save_score", function (evt, iScore) {
+							if (getParamValue('ctl-arcade') === "true") {
+								parent.__ctlArcadeSaveScore({
+									score: iScore
+								});
+							}
+							if(iScore != Balance){
+								$.ajax({
+									url : url+"fairyland/credit",
+									type: "POST",
+									data : {ID: gameInfo.gameType, creditMoney:(iScore-Balance), playerId:gameData.playerId, transactionID:new Date().valueOf()},
+									async : false,
+									success: function(response, textStatus, jqXHR) {
+										Balance = iScore
+										console.log(Balance);
+									},
+									error: function (jqXHR, textStatus, errorThrown) {
+										console.log('============credit==================error');
+									}
+								});
+							}
+						});
+
+						$(oMain).on("show_interlevel_ad", function (evt) {
+							if (getParamValue('ctl-arcade') === "true") {
+								parent.__ctlArcadeShowInterlevelAD();
+							}
+						});
+
+						$(oMain).on("share_event", function (evt, iScore) {
+							if (getParamValue('ctl-arcade') === "true") {
+								parent.__ctlArcadeShareEvent({
+									img: TEXT_SHARE_IMAGE,
+									title: TEXT_SHARE_TITLE,
+									msg: TEXT_SHARE_MSG1 + iScore +
+										TEXT_SHARE_MSG2,
+									msg_share: TEXT_SHARE_SHARE1 +
+										iScore + TEXT_SHARE_SHARE1
+								});
+							}
+						});
+
+						if (isIOS()) {
+							setTimeout(function () {
+								sizeHandler();
+							}, 200);
+						} else {
+							sizeHandler();
+						}
+					},
+                    error: function (jqXHR, textStatus, errorThrown) {
+						console.log('============authenticate==================error');
+						console.log(jqXHR);
+						console.log(textStatus);
+						console.log(errorThrown);
+						console.log('============authenticate==================error');
+					}
+                });
+            });
+			
+		</script>
+		<div class="check-fonts">
+			<p class="check-font-1">test 1</p>
+			<p class="check-font-2">test 2</p>
+			<p class="check-font-3">test 3</p>
+		</div>
+		<canvas id="canvas" class='ani_hack' width="1216" height="832"> </canvas>
+		<div data-orientation="landscape" class="orientation-msg-container">
+			<p class="orientation-msg-text">Please rotate your device</p>
+		</div>
+		<div id="block_game" style="position: fixed; background-color: transparent; top: 0px; left: 0px; width: 100%; height: 100%; display:none"></div>
+	</body>
+</html>

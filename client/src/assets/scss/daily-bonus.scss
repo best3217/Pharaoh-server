@@ -1,0 +1,664 @@
+.modal{
+    background: rgba(0,0,0,0.5);
+}
+.gradient-indent-8 {
+    padding-left: 2vw;
+    padding-right: 1vw;
+    justify-content: space-around;
+    background: url(../images/daily/label1.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 11vw;
+    height: 2.5vw;
+    display: inline-flex;
+    align-items: center;
+    .super-headline1-light{
+        text-transform: unset !important;
+        font-size: 1.2vw !important;
+        width: 100%;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+.daily-modal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+    max-width: 70vw !important;
+    width: 70vw !important;
+    height: 45vw !important;
+    margin: 0px !important;
+    .modal-content{
+        background: transparent;
+        .reward-background{
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 6vw;
+            .reward-button{
+                background: url(../images/daily/reward-button.png) center/31vw 5vw no-repeat;
+                height: 5vw;
+                width: 31vw;
+                justify-content: center;
+                align-content: center;
+                display: flex;
+                cursor: pointer;
+                span{
+                    margin-top: -0.5vw;
+                    font-size: 2.5vw !important;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+        .scroll-text{
+            font-size: 1.5vw;
+            color: #fff;
+            -webkit-filter: drop-shadow(0 -2px 6px #ff8255);
+            filter: drop-shadow(0 -2px 6px #ff8255);
+            white-space: pre;
+            font-weight: 600;
+        }
+        .game-button{
+            height: 3vw;
+            min-width: 10.5vw;
+            background: url(../images/daily/button.png) 0/100% 100% no-repeat;
+            text-transform: unset;
+            font-family: cinzel-bold !important;
+            font-size: 2vw;
+        }
+        .earning-btn{
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            .locks {
+                z-index: 1000;
+                position: absolute;
+                margin-top: -1vw;
+                left: 1.5vw;
+                width: 3vw;
+                height: 3.7vw;
+            }
+            
+            .cover{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 1.5rem;
+                min-height: 4.5vw;
+                img{
+                    width: 4vw;
+                }
+            }
+        }
+        .left-side{
+            width: 15vw;
+            position: absolute;
+            top: 9vw;
+            left: -13vw;
+        }
+        .middle-side{
+            width: 68.5vw;
+            margin-top: 13.5vw;
+            padding: 0.5vw 7vw;
+            margin-left: -15px;
+            .daily-cards{
+                margin-top: 0.5vw;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                .daily-card{
+                    cursor: pointer;
+                    padding: 0.5vw 1vw;
+                    z-index: 10;
+                    img{
+                        width: 5.3vw;
+                    }
+                }
+            }
+        }
+        .right-side{
+            width: 15vw;
+            position: absolute;
+            top: 9vw;
+            right: -13vw;
+        }
+        .bg{
+            background: url(../images/daily/luchky-day.png) center top/42vw 19vw no-repeat,
+            url(../images/daily/table.png) 0 10.5vw/100% 28.5vw no-repeat;
+            height: 40vw !important;
+            width: 67vw !important;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: block;
+        }
+    }
+    .close-button {
+        position: absolute;
+        right: 2.5vw;
+        top: 4vw;
+        max-width: 10vw;
+        z-index: 10;
+        img{
+            width: 5vw;
+        }
+    }
+    
+}
+
+
+.treasure-modal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+    width: 70vw !important;
+    height: 45vw !important;
+    margin: 0px !important;
+    .modal-content{
+        background: transparent;
+        .bg{
+            background: 
+            url(../images/treasure/people.png) 0px 8vw/9vw 29vw no-repeat,
+            url(../images/treasure/people.png) 100% 8vw/9vw 29vw no-repeat,
+            url(../images/treasure/treasure-bottom.png) 0px 100%/70vw 5.1vw no-repeat,
+            url(../images/treasure/treasure.png) center 8vw/50vw 32vw no-repeat,
+            url(../images/treasure/title.png) center top/32vw 10vw no-repeat;
+            height: 39vw !important;
+            width: 70vw !important;
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            display: block;
+            // pointer-events: none;
+            // user-select: none;
+        }
+        .gold{
+            background: url(../images/golds.png) center top/100% 100% no-repeat;
+            height: 70px !important;
+            width: 950px !important;
+            left: 50%;
+            transform: translateX(-50%);
+            // margin-top: 100px;
+            position: relative;
+            bottom: -0.5vw;
+            display: block;
+        }
+    }
+
+    .close-button {
+        position: absolute;
+        right: -7vw;
+        top: 3vw;
+        max-width: 10vw;
+        z-index: 10;
+        img{
+            width: 5vw;
+        }
+    }
+}
+
+
+.shop-modal{
+    max-width: 1250px !important;
+    .modal-content{
+        background: transparent;
+        .bg{
+            background: url(../images/shop.png) center top/324px 135px no-repeat;
+            height: 752px !important;
+            width: 1250px !important;
+            // margin-top: 100px;
+            position: absolute;
+            right: 1px;
+            top: 0;
+            display: block;
+            pointer-events: none;
+            user-select: none;
+        }
+        .gold{
+            background: url(../images/golds.png) center top/100% 100% no-repeat;
+            height: 70px !important;
+            width: 950px !important;
+            left: 50%;
+            transform: translateX(-50%);
+            // margin-top: 100px;
+            position: relative;
+            bottom: -0.5vw;
+            display: block;
+        }
+    }   
+    .close-button {
+        position: absolute;
+        right: -50px;
+        top: 50px;
+        max-width: 93px;
+        z-index: 10;
+        img{
+            width: 100%;
+        }
+    }
+}
+
+.mission-modal{
+    max-width: 1280px !important;
+    .modal-content{
+        background: transparent;
+        .mission{
+            margin-top: 200px;
+            padding: 0px 30px;
+            display: flex;
+            justify-content: space-between;
+            .left-side{
+                width: calc(100% - 350px);
+                height: 100%;
+                .number{
+                    background: url(../images/mission/number.png) 0/80px 85px no-repeat;
+                    z-index: 10;
+                    width: 80px;
+                    height: 85px;
+                    position: absolute;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    right: -10px;
+                    top: -10px;
+                    color: #fff;
+                    font-size: 28px;
+                    font-family: cinzel-bold;
+                    font-weight: bold;
+                }
+                .mission-title{
+                    color: #fff;
+                    text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 8px #ff0047;
+                    text-align: center;
+                    font-family: cinzel-bold;
+                    font-size: 20px;
+                    margin-bottom: 5px;
+                }
+                .m-progress{
+                    position: absolute;
+                    z-index: 10;
+                    width: 180px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    bottom: 30px;
+                    .m-number{
+                        text-align: center;
+                        margin-top: 2px;
+                        font-size: 20px;
+                        color: #fff !important;
+                        font-family: cinzel-bold;
+                    }
+                    .mprogress-bar{
+                        height: 16px;
+                        overflow: hidden;
+                        outline: 10px solid transparent;
+                        border-radius: 16px;
+                        background-origin: border-box;
+                        background-clip: padding-box,border-box;
+                        background-size: 100% 100%;
+                        border: solid #d18413 1px;
+                        -webkit-box-orient: vertical;
+                        -webkit-box-direction: normal;
+                        -ms-flex-direction: column;
+                        flex-direction: column;
+                        -webkit-box-pack: center;
+                        -ms-flex-pack: center;
+                        justify-content: center;
+                        text-align: center;
+                        white-space: nowrap;
+                        -webkit-transition: width .6s ease;
+                        transition: width .6s ease;
+                        display: flex;
+                        background-image: linear-gradient(#4c0606,#8c1919 63%,#2a0a0a);
+                        .mprogress-fill{
+                            height: 100%;
+                            border-top-left-radius: 16px;
+                            border-bottom-left-radius: 16px;
+                            background-image: linear-gradient(90deg, rgba(216,13,85,1) 0%, rgba(252,176,69,1) 100%);
+                        }
+                    }
+                }
+            }
+            .right-side{
+                width: 350px;
+                height: 100%;
+                .chest-covered{
+                    margin-top: 30px;
+                    width: 350px;
+                    height: 480px;
+                    background: 
+                        url(../images/mission/book.png) center 0px/348px 220px no-repeat,
+                        url(../images/mission/cloth.png) center 20px/350px 380px no-repeat;
+                }
+            }
+            .bottom-side{
+                position: absolute;
+                bottom: 33px;
+                width: 100%;
+                height: 1px;
+                
+                .button-change-mission{
+                    position: absolute;
+                    top: 0;
+                    left: 25px;
+                    background: url(../images/mission/button2.png) 0/100% 100% no-repeat;
+                    height: 100px;
+                    width: 415px;
+                    cursor: pointer;
+                    .button-chlid{
+                        padding: 0px 80px;
+                    }
+                    .text1{
+                        color: white;
+                        font-size: 28px;
+                        font-family: cinzel-bold;
+                        text-transform: uppercase;
+                    }
+                    .text2 {
+                        color: white;
+                        font-size: 28px;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        font-family: cinzel-bold;
+                        display: -webkit-inline-box;
+                        display: -ms-inline-flexbox;
+                        display: inline-flex;
+                        margin-right: 42px;
+                        float: right;
+                    }
+                    .crown-img{
+                        width: 32px;
+                        position: absolute;
+                        top: 5px;
+                        right: 20px;
+                    }
+                }
+                .button-active{
+                    position: absolute;
+                    top: -5px;
+                    right: 250px;
+                    background: url(../images/mission/button1.png) 0/100% 100% no-repeat;
+                    width: 460px;
+                    height: 120px;
+                    cursor: default;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    .button-active-text{
+                        color: white;
+                        font-size: 30px;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        font-family: cinzel-bold;
+                    }
+                }
+            }
+        }
+        .bg{
+            margin-top: 50px;
+            background: 
+                url(../images/mission/mission.png) center top/550px 137px no-repeat,
+                url(../images/mission/cover.png) center 40px/1280px 650px no-repeat,
+                url(../images/mission/background.png) center 40px/calc(100% - 20px) calc(100% - 50px) no-repeat;
+            height: 690px !important;
+            width: 1280px !important;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            display: block;
+            pointer-events: none;
+            user-select: none;
+        }
+        .gold{
+            background: url(../images/golds.png) center top/100% 100% no-repeat;
+            height: 70px !important;
+            width: 950px !important;
+            left: 50%;
+            transform: translateX(-50%);
+            // margin-top: 100px;
+            position: relative;
+            bottom: -0.5vw;
+            display: block;
+        }
+    }   
+    .close-button {
+        position: absolute;
+        right: -30px;
+        top: 60px;
+        max-width: 93px;
+        z-index: 10;
+        img{
+            width: 100%;
+        }
+    }
+}
+
+.station-modal {
+    max-width: 1280px !important;
+    .modal-content{
+        background: transparent;
+        .station {
+            margin-top: 200px;
+            padding: 0 80px;
+            .station-card {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .station-info {
+                    width: 235px;
+                    height: 294px;
+                }
+                .station-button {
+                    width: 200px;
+                    height: 45px;
+                    color: #fff;
+                    justify-content: center;
+                    display: flex;
+                    margin-top: 20px;
+                    p {
+                        font-size: 20px;
+                        font-weight: bold;
+                    }
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+                &.unlocked {
+                    .station-button {
+                        background: url(../images/station/button-light.png) center top/100% 100% no-repeat;
+                        p {
+                            color: rgb(22, 22, 22);
+                            font-weight: bold;
+                        }
+                    }
+                    .station-info {
+                        position: relative;
+                        background: url(../images/station/unlocked-card.png) center top/100% 100% no-repeat;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: space-between;
+                        .station-progress {
+                            width: 60%;
+                            height: 20px;
+                            border: 2px solid #d18413;
+                            background: linear-gradient(0deg, rgba(64,5,5,1) 0%, rgba(140,25,25,1) 50%, rgba(64,5,5,1) 100%);
+                            position: absolute;
+                            top: -10px;
+                            .progress-bar {
+                                background: #d18413;
+                            }
+                        }
+                        .image {
+                            background-color: #fff;
+                            padding: 5px;
+                            display: inline-block;
+                            margin-top: 30px;
+                        }
+                        .station-description {
+                            color: #671313;
+                            font-size: 22px;
+                            width: 70%;
+                            font-weight: bold;
+                            text-align: center;
+                        }
+                        .difficult-type {
+                            width: 174px;
+                            height: 39px;
+                            background: url(../images/station/button-dark.png) center top/100% 100% no-repeat;
+                            display: flex;
+                            justify-content: center;
+                            margin-bottom: 20px;
+                            p {
+                                color: white;
+                                font-weight: bold;
+                            }
+                        }
+                    }
+                }
+                &.locked {
+                    .station-info {
+                        background: url(../images/station/locked-card.png) center top/100% 100% no-repeat;
+                    }
+                    .station-button {
+                        background: url(../images/station/locked-button.png) center top/100% 100% no-repeat;
+                    }
+                }
+                &.card-2 {
+                    margin-top: 50px;
+                }
+                &.card-3 {
+                    margin-top: 100px;
+                }
+                &.card-4 {
+                    margin-top: 80px;
+                }
+            }
+        }
+        .bg{
+            background: 
+                url(../images/station/station-3-text.png) center 27px/460px 193px no-repeat,
+                url(../images/station/gold-box.png) 90% 0px/322px 261px no-repeat,
+                url(../images/station/make-your-choice-text.png) 7% 650px/548px 39px no-repeat,
+                url(../images/station/cover.png) center 125px/1280px 650px no-repeat,
+                url(../images/mission/background.png) center 125px/calc(100% - 20px) calc(100% - 50px) no-repeat;
+            height: 775px !important;
+            width: 1280px !important;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            display: block;
+            pointer-events: none;
+            user-select: none;
+        }
+        .gold{
+            background: url(../images/golds.png) center top/100% 100% no-repeat;
+            height: 70px !important;
+            width: 950px !important;
+            left: 50%;
+            transform: translateX(-50%);
+            // margin-top: 100px;
+            position: relative;
+            bottom: -0.5vw;
+            display: block;
+        }
+    }   
+    .close-button {
+        position: absolute;
+        right: -20px;
+        top: 90px;
+        max-width: 93px;
+        z-index: 10;
+        img{
+            width: 100%;
+        }
+    }
+}
+
+.bonus-slot-modal{
+    max-width: 1293px !important;
+    .modal-content{
+        background: transparent;
+        .bg{
+            margin-top: 50px;
+            background: 
+                url(../images/bonus/title.png) center 20px/543px 147px no-repeat,
+                url(../images/bonus/seperator.png) center 250px/310px 213px no-repeat,
+                url(../images/bonus/coin.png) center calc(100% - 150px)/990px 129px no-repeat,
+                url(../images/bonus/crown.png) 850px 600px/214px 86px no-repeat,
+                url(../images/bonus/background.png) center top/calc(100% - 20px) calc(100% - 50px) no-repeat;
+            height: 849px !important;
+            width: 1293px !important;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            display: block;
+            pointer-events: none;
+            user-select: none;
+        }
+    }   
+    .close-button {
+        position: absolute;
+        right: -30px;
+        top: 60px;
+        max-width: 93px;
+        z-index: 10;
+        img{
+            width: 100%;
+        }
+    }
+    .amount-cover{
+        left: calc(50% + 20px);
+        transform: translateX(-50%);
+        top: 6vw;
+        display: flex;
+        justify-content: space-around;
+        font-family: cinzel-bold;
+        width: 900px;
+        div{
+            display: inline-flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        .amount-0{
+            width: 265px;
+            position: absolute;
+            left: 20px;
+        }
+        .amount-1{
+            width: 265px;
+            position: absolute;
+            left: 305px;
+        }
+        .amount-2{
+            width: 265px;
+            position: absolute;
+            left: 588px;
+        }
+        .amount{
+            color: white;
+            font-size: 30px;
+            background-image: linear-gradient(rgba(216,13,85,1), rgba(252,176,69,1) 100%);
+            border-radius: 5px;
+            padding: 0px 30px;
+            img{
+                max-width: 40px;
+                width: 100%;
+            }
+        }
+    }
+}
