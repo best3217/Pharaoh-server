@@ -61,15 +61,13 @@ export default (io) => {
 							await Sessions.deleteOne({users_id: decoded.users_id})
 						}
 					})
-
-
 					//////////////////////////////bouns-slots-remaining//////////////////////////////
-					const bouns = await BonusSlotsHistories.findOne({users_id: decoded.users_id}).sort({createdAt: 1})
+					const bouns = await BonusSlotsHistories.findOne({users_id: decoded.users_id}).sort({createdAt: -1})
 					console.log(bouns)
 					if(bouns){
 						io.to(socket.id).emit('bonus-slots-remaining', bouns.remaining)
 					}else{
-						io.to(socket.id).emit('bonus-slots-remaining', (new Date().valueOf() - 3600000))
+						io.to(socket.id).emit('bonus-slots-remaining', new Date().valueOf() - 3600000)
 					}
 				}
 			} catch (err) {

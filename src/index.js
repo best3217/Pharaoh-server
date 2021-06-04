@@ -39,9 +39,9 @@ app.get('/horse', (req, res) => res.sendFile(path.join(__dirname, 'games/horse/i
 app.get('/soccer', (req, res) => res.sendFile(path.join(__dirname, 'games/soccer/index.html')))
 
 app.use('/api', routes)
-app.get('*', (req, res) => res.sendFile(__dirname + '/build/index.html'))
+app.get('*', (req, res) => res.sendFile(__dirname + 'client/build/index.html'))
 
-mongoose.connect(process.env.DATABASE, {useUnifiedTopology:true, useNewUrlParser:true, useFindAndModify:false, useCreateIndex:true})
+mongoose.connect(process.env.DATABASES, {useUnifiedTopology:true, useNewUrlParser:true, useFindAndModify:false, useCreateIndex:true})
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 socket(io)
