@@ -1,6 +1,7 @@
 // ** Auth Endpoints
-const url = 'http://h2931731.stratoserver.net'
-// const test = 'http://192.168.110.145:1998'
+const url = 'http://85.214.82.29'
+// const url = 'http://h2931731.stratoserver.net'
+// const url = 'http://192.168.110.145:1998'
 export default {
   loginEndpoint: 'users/login',
   registerEndpoint: 'users/register',
