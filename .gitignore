@@ -64,3 +64,7 @@ typings/
 
 # FuseBox cache
 .fusebox/
+
+
+#build 
+/src/build
