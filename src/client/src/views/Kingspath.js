@@ -67,7 +67,7 @@ const Kingspath = () => {
            "game_details": {
               "id": 67,
               "title": "Coins of Egypt",
-              "thumbnail": "http://85.214.82.29/game-6.jpg"
+              "thumbnail": "http://h2931731.stratoserver.net/game-6.jpg"
            },
            "mission": {
               "id": 9,
@@ -1016,7 +1016,7 @@ const Kingspath = () => {
         //mission thumbnail
         // const thumb_url =
         //   getThumbnailByGameId(activeMission.game_details.id) + "?crossorigin";
-        let thumbnail = PIXI.Sprite.from('http://http://85.214.82.29/game-6.jpg');
+        let thumbnail = PIXI.Sprite.from('http://http://h2931731.stratoserver.net/game-6.jpg');
         thumbnail.width = 140;
         thumbnail.height = 90;
         thumbnail.x = 0;
